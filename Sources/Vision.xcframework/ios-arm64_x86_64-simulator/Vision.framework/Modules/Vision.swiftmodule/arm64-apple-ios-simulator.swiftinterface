@@ -1,0 +1,117 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
+// swift-module-flags: -target arm64-apple-ios15.4-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Vision
+import Foundation
+import Swift
+import SystemConfiguration
+import UIKit
+@_exported import Vision
+import _Concurrency
+public class VisionRequest {
+  public init(googleAPIKey: Swift.String)
+  public func detectProduct(source: UIKit.UIImage, config: Vision.VisionRequestConfig, completion: @escaping (Swift.Result<Vision.VisionImageReponse, Vision.VisionError>) -> ())
+  @objc deinit
+}
+public struct VisionImageReponse : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Response : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct CropHintsAnnotation : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct CropHint : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Bounding : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Vertex : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct FullTextAnnotation : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Page : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Block : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Paragraph : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Word : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct WordProperty : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct DetectedLanguage : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Symbol : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct SymbolProperty : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct DetectedBreak : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Annotation : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct LocalizedObjectAnnotation : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct BoundingPoly : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct TextAnnotation : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum VisionError : Swift.Error {
+  case general
+  case error(title: Swift.String, message: Swift.String)
+  case noInternetConnection
+  case badURL
+  case returnedDataIsEmpty
+  case failedToParseData(message: Swift.String)
+  case requestCanceled
+  case imageError
+  public var errorTitle: Swift.String {
+    get
+  }
+  public var errorMessage: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class Reachability {
+  @objc deinit
+}
+public struct VisionRequestConfig {
+  public enum DetectionType : Swift.String {
+    case landmark
+    case logo
+    case label
+    case text
+    case cropHints
+    case objectLocalization
+    case product
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public let maxResultsCount: Swift.Int
+  public let detectionTypes: [Vision.VisionRequestConfig.DetectionType]
+  public init(maxResultsCount: Swift.Int, detectionTypes: [Vision.VisionRequestConfig.DetectionType])
+  public func convertToAPIDetectionInfo() -> [[Swift.String : Any]]
+}
+extension Vision.VisionRequestConfig.DetectionType : Swift.Equatable {}
+extension Vision.VisionRequestConfig.DetectionType : Swift.Hashable {}
+extension Vision.VisionRequestConfig.DetectionType : Swift.RawRepresentable {}
