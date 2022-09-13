@@ -42,13 +42,13 @@ let package = Package(
   ],
   products: [
     .library(
-      name: "Vision",
-      targets: ["Vision"]),
+      name: "VisionFramework",
+      targets: ["VisionFramework"]),
   ],
   targets: [
     .binaryTarget(
-      name: "Vision",
-      path: "./Sources/Vision.xcframework"
+      name: "VisionFramework",
+      path: "./Sources/VisionFramework.xcframework"
     )
   ]
 )

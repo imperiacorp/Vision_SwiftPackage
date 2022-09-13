@@ -1,0 +1,11 @@
+framework module VisionFramework {
+  umbrella header "VisionFramework.h"
+
+  export *
+  module * { export * }
+}
+
+module VisionFramework.Swift {
+    header "VisionFramework-Swift.h"
+    requires objc
+}
