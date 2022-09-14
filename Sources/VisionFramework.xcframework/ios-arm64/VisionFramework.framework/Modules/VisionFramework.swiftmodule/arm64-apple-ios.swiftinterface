@@ -26,8 +26,26 @@ public enum VisionError : Swift.Error {
     get
   }
 }
+public struct VisionProductSetsResponse : Swift.Codable {
+  public let productSets: [VisionFramework.ProductSet]?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ProductSet : Swift.Codable {
+  public let name: Swift.String
+  public let displayName: Swift.String
+  public let indexTime: Swift.String
+  public let indexError: VisionFramework.IndexError
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct IndexError : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
 public class VisionRequest {
   public init(googleAPIKey: Swift.String, needsLogs: Swift.Bool)
+  public func retrieveProductSets(projectId: Swift.String, regionId: Swift.String, completion: @escaping (Swift.Result<VisionFramework.VisionProductSetsResponse, VisionFramework.VisionError>) -> ())
   public func detectProduct(source: UIKit.UIImage, config: VisionFramework.VisionRequestConfig, completion: @escaping (Swift.Result<VisionFramework.VisionImageReponse, VisionFramework.VisionError>) -> ())
   @objc deinit
 }
@@ -92,26 +110,56 @@ public struct BoundingPoly : Swift.Decodable {
 public struct TextAnnotation : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
+public struct ProductSearchResults : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ProductGroupedResult : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct NormalizedVertex : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ObjectAnnotation : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ProductResult : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Product : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct ProductLabel : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
 public struct VisionRequestConfig {
-  public enum DetectionType : Swift.String {
-    case landmark
-    case logo
-    case label
-    case text
-    case cropHints
-    case objectLocalization
-    case product
+  public enum ProductCategories : Swift.String {
+    case apparel
+    case homegoods
+    case toys
+    case apparelV2
+    case homegoodsV2
+    case toysV2
+    case packagedgoodsV1
     public init?(rawValue: Swift.String)
     public typealias RawValue = Swift.String
     public var rawValue: Swift.String {
       get
     }
   }
+  public enum DetectionType {
+    case landmark
+    case logo
+    case label
+    case text
+    case cropHints
+    case objectLocalization
+    case product(productSetPath: Swift.String, categoryId: VisionFramework.VisionRequestConfig.ProductCategories)
+  }
   public let maxResultsCount: Swift.Int
   public let detectionTypes: [VisionFramework.VisionRequestConfig.DetectionType]
   public init(maxResultsCount: Swift.Int, detectionTypes: [VisionFramework.VisionRequestConfig.DetectionType])
   public func convertToAPIDetectionInfo() -> [[Swift.String : Any]]
 }
-extension VisionFramework.VisionRequestConfig.DetectionType : Swift.Equatable {}
-extension VisionFramework.VisionRequestConfig.DetectionType : Swift.Hashable {}
-extension VisionFramework.VisionRequestConfig.DetectionType : Swift.RawRepresentable {}
+extension VisionFramework.VisionRequestConfig.ProductCategories : Swift.Equatable {}
+extension VisionFramework.VisionRequestConfig.ProductCategories : Swift.Hashable {}
+extension VisionFramework.VisionRequestConfig.ProductCategories : Swift.RawRepresentable {}
