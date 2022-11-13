@@ -1,12 +1,17 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
 // swift-module-flags: -target x86_64-apple-ios15.4-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name VisionFramework
+import Combine
 import Foundation
+import SafariServices
 import Swift
 import SystemConfiguration
 import UIKit
 @_exported import VisionFramework
 import _Concurrency
+public struct VisionImageInfoResponse : Swift.Decodable {
+  public init(from decoder: Swift.Decoder) throws
+}
 @_hasMissingDesignatedInitializers public class Reachability {
   @objc deinit
 }
@@ -33,9 +38,9 @@ public struct VisionProductSetsResponse : Swift.Codable {
 }
 public struct ProductSet : Swift.Codable {
   public let name: Swift.String
-  public let displayName: Swift.String
+  public let displayName: Swift.String?
   public let indexTime: Swift.String
-  public let indexError: VisionFramework.IndexError
+  public let indexError: VisionFramework.IndexError?
   public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
 }
@@ -43,9 +48,20 @@ public struct IndexError : Swift.Codable {
   public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
 }
+extension UIKit.UIViewController : UIKit.UITextFieldDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func textFieldShouldReturn(_ textField: UIKit.UITextField) -> Swift.Bool
+}
+public struct VisionRequestUIConfig {
+  public let needsLogs: Swift.Bool
+  public let googleAPIKey: Swift.String
+  public let projectId: Swift.String
+  public let regionId: Swift.String
+  public init(needsLogs: Swift.Bool, googleAPIKey: Swift.String, projectId: Swift.String, regionId: Swift.String)
+}
 public class VisionRequest {
   public init(googleAPIKey: Swift.String, needsLogs: Swift.Bool)
   public func retrieveProductSets(projectId: Swift.String, regionId: Swift.String, completion: @escaping (Swift.Result<VisionFramework.VisionProductSetsResponse, VisionFramework.VisionError>) -> ())
+  public func retrieveImageInfo(path: Swift.String, completion: @escaping (Swift.Result<VisionFramework.VisionImageInfoResponse, VisionFramework.VisionError>) -> ())
   public func detectProduct(source: UIKit.UIImage, config: VisionFramework.VisionRequestConfig, completion: @escaping (Swift.Result<VisionFramework.VisionImageReponse, VisionFramework.VisionError>) -> ())
   @objc deinit
 }
@@ -116,9 +132,6 @@ public struct ProductSearchResults : Swift.Decodable {
 public struct ProductGroupedResult : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
-public struct NormalizedVertex : Swift.Decodable {
-  public init(from decoder: Swift.Decoder) throws
-}
 public struct ObjectAnnotation : Swift.Decodable {
   public init(from decoder: Swift.Decoder) throws
 }
@@ -159,6 +172,11 @@ public struct VisionRequestConfig {
   public let detectionTypes: [VisionFramework.VisionRequestConfig.DetectionType]
   public init(maxResultsCount: Swift.Int, detectionTypes: [VisionFramework.VisionRequestConfig.DetectionType])
   public func convertToAPIDetectionInfo() -> [[Swift.String : Any]]
+}
+public class VisionUIRequest {
+  public init(config: VisionFramework.VisionRequestUIConfig)
+  public func detectProduct(source: UIKit.UIImage, sourceController: UIKit.UIViewController)
+  @objc deinit
 }
 extension VisionFramework.VisionRequestConfig.ProductCategories : Swift.Equatable {}
 extension VisionFramework.VisionRequestConfig.ProductCategories : Swift.Hashable {}
